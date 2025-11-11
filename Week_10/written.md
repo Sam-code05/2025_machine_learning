@@ -6,7 +6,7 @@
 $$dx_t = f(x_t, t) dt + g(x_t, t) dW_t$$
 
 證明其對應的 Probability Flow ODE (常微分方程) 可以寫為：
-$$dx_t = \left[ f(x_t, t) - \frac{1}{2} \frac{\partial}{\partial x} g^2(x_t, t) - \frac{g^2(x_t, t)}{2} \frac{\partial}{\partial x} \log p(x_t, t) \right] dt$$
+$$ dx_t = \left[ f(x_t, t) - \frac{1}{2} \frac{\partial}{\partial x} g^2(x_t, t) - \frac{g^2(x_t, t)}{2} \frac{\partial}{\partial x} \log p(x_t, t) \right] dt$$
 
 ---
 
@@ -22,7 +22,7 @@ $$dx_t = \left[ f(x_t, t) - \frac{1}{2} \frac{\partial}{\partial x} g^2(x_t, t) 
 
 ### 2. 過程
 
-（為簡潔，我在推導中省略 $(x_t, t)$，將 $p(x_t, t)$ 記為 $p$，$f(x_t, t)$ 記為 $f$，$g(x_t, t)$ 記為 $g$）
+（為簡潔，我在推導中省略$(x_t, t)$，將$p(x_t, t)$ 記為$p$，$f(x_t, t)$記為$f$，$g(x_t, t)$記為$g$）
 
 ### Step 1： SDE 的 Fokker-Planck 方程 (FPE)
 
@@ -31,7 +31,7 @@ $$dx_t = f dt + g dW_t$$
 
 其機率密度 $p(x, t)$ 的演化由 **Fokker-Planck 方程**描述。對於此 SDE，FPE 的具體形式為：
 $$
-\frac{\partial p}{\partial t} = -\frac{\partial}{\partial x} [f p] + \frac{1}{2} \frac{\partial^2}{\partial x^2} [g^2 p]
+\frac{\partial p}{\partial t} = -\frac{\partial}{\partial x} [fp] + \frac{1}{2} \frac{\partial^2}{\partial x^2} [g^2p]
 $$
 **(Equation A)**
 
@@ -43,7 +43,7 @@ $$dx_t = F dt$$
 
 此 ODE 的機率密度 $p(x, t)$ 的演化由**連續性方程**描述：
 $$
-\frac{\partial p}{\partial t} = -\frac{\partial}{\partial x} [F p]
+\frac{\partial p}{\partial t} = -\frac{\partial}{\partial x} [Fp]
 $$
 **(Equation B)**
 
