@@ -64,18 +64,14 @@ $$F p = f p - \frac{1}{2} \left[ \left( \frac{\partial g^2}{\partial x} \right) 
 然後，在等式兩邊同時除以 $p$（假設 $p \neq 0$），以解出 $F$：
 $$F = f - \frac{1}{2} \left( \frac{\partial g^2}{\partial x} \right) - \frac{1}{2} g^2 \left( \frac{1}{p} \frac{\partial p}{\partial x} \right)$$
 
-### 步驟 4：引入 Score Function
+### Step 4：引入 Score Function
 
 最後注意最後一項 $\left( \frac{1}{p} \frac{\partial p}{\partial x} \right)$。
 根據**Score Function (分數函數)** 的定義，  
-$$
-\frac{\partial}{\partial x} \log p = \frac{1}{p} \frac{\partial p}{\partial x}
-$$
+$$\frac{\partial}{\partial x} \log p = \frac{1}{p} \frac{\partial p}{\partial x}$$
 
 將這個 Score Function 的定義代入我們解出的 $F$ 中：  
-$$
-F = f - \frac{1}{2} \frac{\partial g^2}{\partial x} - \frac{g^2}{2} \frac{\partial}{\partial x} \log p
-$$
+$$F = f - \frac{1}{2} \frac{\partial g^2}{\partial x} - \frac{g^2}{2} \frac{\partial}{\partial x} \log p$$
 
 這正是題目要求證明的 ODE 漂移係數 $F$。
 因此，我們證明了與前向 SDE 對應的 probability flow ODE 為：  
