@@ -3,9 +3,11 @@
 ## 第一題題目
 
 給定一個前向 SDE (Stochastic Differential Equation)：  
+
 $$dx_t = f(x_t, t) dt + g(x_t, t) dW_t$$
 
 證明其對應的 Probability Flow ODE (常微分方程) 可以寫為：  
+
 $$dx_t = \left[f(x_t, t) - \frac{1}{2} \frac{\partial}{\partial x} g^2(x_t, t) - \frac{g^2(x_t, t)}{2} \frac{\partial}{\partial x} \log p(x_t, t) \right] dt$$
 
 ---
@@ -27,54 +29,69 @@ $$dx_t = \left[f(x_t, t) - \frac{1}{2} \frac{\partial}{\partial x} g^2(x_t, t) -
 ### Step 1： SDE 的 Fokker-Planck 方程 (FPE)
 
 給定的前向 SDE 為：  
+
 $$dx_t = f dt + g dW_t$$
 
 其機率密度 $p(x, t)$ 的演化由 **Fokker-Planck 方程**描述。對於此 SDE，FPE 的具體形式為：  
-$$\frac{\partial p}{\partial t} = -\frac{\partial}{\partial x} [fp] + \frac{1}{2} \frac{\partial^2}{\partial x^2} [g^2p]$$
+
+$$\frac{\partial p}{\partial t} = -\frac{\partial}{\partial x} [fp] + \frac{1}{2} \frac{\partial^2}{\partial x^2} [g^2p]$$  
+
 **(Equation A)**
 
 ### Step 2： ODE 的連續性方程 (Continuity Equation)
 
-假設存在一個確定性的 Probability Flow ODE，其形式為：
+假設存在一個確定性的 Probability Flow ODE，其形式為：  
+
 $$dx_t = F dt$$
+
 其中 $F = F(x_t, t)$ 是我們想要找到的未知漂移係數。
 
-此 ODE 的機率密度 $p(x, t)$ 的演化由**連續性方程**描述：
-$$\frac{\partial p}{\partial t} = -\frac{\partial}{\partial x} [Fp]$$
+此 ODE 的機率密度 $p(x, t)$ 的演化由**連續性方程**描述：  
+
+$$\frac{\partial p}{\partial t} = -\frac{\partial}{\partial x} [Fp]$$  
+
 **(Equation B)**
 
 ### Step 3：令方程相等並求解 $F$
 
-為了讓 SDE 和 ODE 具有相同的機率密度演化 $p(x, t)$，我們必須令 **(Equation A) = (Equation B)**：
+為了讓 SDE 和 ODE 具有相同的機率密度演化 $p(x, t)$，我們必須令 **(Equation A) = (Equation B)**：  
+
 $$-\frac{\partial}{\partial x} [F p] = -\frac{\partial}{\partial x} [f p] + \frac{1}{2} \frac{\partial^2}{\partial x^2} [g^2 p]$$
 
-接著對等式兩邊同時關於 $x$ 積分（並假設在 $\pm\infty$ 處的機率通量為 0）：
+接著對等式兩邊同時關於 $x$ 積分（並假設在 $\pm\infty$ 處的機率通量為 0）：  
+
 $$-[F p] = -[f p] + \frac{1}{2} \frac{\partial}{\partial x} [g^2 p]$$
 
-兩邊同乘 -1：
+兩邊同乘 -1：  
+
 $$Fp = fp - \frac{1}{2} \frac{\partial}{\partial x}[g^2 p]$$
 
-接下來，使用**乘法求導法則** $\frac{\partial}{\partial x}(uv) = (\frac{\partial u}{\partial x})v + u(\frac{\partial v}{\partial x})$ 來展開 $\frac{\partial}{\partial x} [g^2 p]$：
+接下來，使用**乘法求導法則** $\frac{\partial}{\partial x}(uv) = (\frac{\partial u}{\partial x})v + u(\frac{\partial v}{\partial x})$ 來展開 $\frac{\partial}{\partial x} [g^2 p]$：  
 
 $$\frac{\partial}{\partial x} [g^2 p] = \left( \frac{\partial g^2}{\partial x} \right) p + g^2 \left( \frac{\partial p}{\partial x} \right)$$
 
-將這個展開式代回原方程：
+將這個展開式代回原方程：  
+
 $$F p = f p - \frac{1}{2} \left[ \left( \frac{\partial g^2}{\partial x} \right) p + g^2 \left( \frac{\partial p}{\partial x} \right) \right]$$
 
-然後，在等式兩邊同時除以 $p$（假設 $p \neq 0$），以解出 $F$：
+然後，在等式兩邊同時除以 $p$（假設 $p \neq 0$），以解出 $F$：  
+
 $$F = f - \frac{1}{2} \left( \frac{\partial g^2}{\partial x} \right) - \frac{1}{2} g^2 \left( \frac{1}{p} \frac{\partial p}{\partial x} \right)$$
 
 ### Step 4：引入 Score Function
 
 最後注意最後一項 $\left( \frac{1}{p} \frac{\partial p}{\partial x} \right)$。
 根據**Score Function (分數函數)** 的定義，  
+
 $$\frac{\partial}{\partial x} \log p = \frac{1}{p} \frac{\partial p}{\partial x}$$
 
 將這個 Score Function 的定義代入我們解出的 $F$ 中：  
+
 $$F = f - \frac{1}{2} \frac{\partial g^2}{\partial x} - \frac{g^2}{2} \frac{\partial}{\partial x} \log p$$
 
 這正是題目要求證明的 ODE 漂移係數 $F$。
 因此，我們證明了與前向 SDE 對應的 probability flow ODE 為：  
+
 $$dx_t = \left[ f(x_t, t) - \frac{1}{2} \frac{\partial}{\partial x} g^2(x_t, t) - \frac{g^2(x_t, t)}{2} \frac{\partial}{\partial x} \log p(x_t, t) \right]dt$$
 
 **證明完畢。**
