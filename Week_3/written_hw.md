@@ -37,7 +37,7 @@ The authors employ a clever tool from numerical analysis: the **central finite d
 Although the operator sounds complicated, the idea is straightforward. In calculus, we approximate derivatives using $\frac{f(x+h) - f(x)}{h}$.  
 This operator follows the same principle: it takes the values of a function at different positions (such as $x+h, x, x-h$), applies weighted linear combinations, and isolates specific behaviors of the function.
 
-The `tanh` function is an odd function ($\tanh(-x) = -\tanh(x)$), and its Taylor expansion at $x=0$ contains only odd-powered terms:
+The `tanh` function is an odd function ( $\tanh(-x) = -\tanh(x)$ ), and its Taylor expansion at $x=0$ contains only odd-powered terms:
 
 $$
 \tanh(x) = x - \frac{1}{3}x^3 + \frac{2}{15}x^5 - \dots
