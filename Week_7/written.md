@@ -75,9 +75,10 @@ DSM 的思想是：**與其學習 $p(x)$（乾淨數據）的 Score，不如去�
 
 3.  **DSM 的魔法：** DSM 證明了，學習这个加噪分佈的 Score，其損失函數可以被簡化為一個**極其簡單**的形式：
 
-    $$
-    L_{DSM}(\theta) = \mathbb{E}_{p(x), \mathcal{N}(\tilde{x}|x, \sigma^2 I)} \left[ \left\| s_\theta(\tilde{x}) - \nabla_{\tilde{x}} \log p(\tilde{x}|x) \right\|^2 \right]
-    $$
+$$
+L_{DSM}(\theta) = \mathbb{E}_{p(x), \mathcal{N}(\tilde{x}|x, \sigma^2 I)} \left[ \left\| s_\theta(\tilde{x}) - \nabla_{\tilde{x}} \log p(\tilde{x}|x) \right\|^2 \right]
+$$
+
 
     這個 $\nabla_{\tilde{x}} \log p(\tilde{x}|x)$ 是什麼？它只是「給定 $x$，得到 $\tilde{x}$」的機率的梯度。
     * $p(\tilde{x}|x) = \mathcal{N}(\tilde{x}|x, \sigma^2 I) \propto \exp\left(-\frac{\|\tilde{x}-x\|^2}{2\sigma^2}\right)$
@@ -87,9 +88,10 @@ DSM 的思想是：**與其學習 $p(x)$（乾淨數據）的 Score，不如去�
 4.  **DSM 損失函數：**
     把上面的結果代回去，我們得到 DSM 損失函數：
 
-    $$
-    L_{DSM}(\theta) = \mathbb{E}_{p(x), \epsilon} \left[ \left\| s_\theta(x+\epsilon) - \left( - \frac{\epsilon}{\sigma^2} \right) \right\|^2 \right]
-    $$
+$$
+L_{DSM}(\theta) = \mathbb{E}_{p(x), \epsilon} \left[ \left\| s_\theta(x+\epsilon) - \left( - \frac{\epsilon}{\sigma^2} \right) \right\|^2 \right]
+$$
+
     （註：實作中常會省略 $\sigma^2$ 或調整權重，訓練模型 $s_\theta(x+\epsilon)$ 直接去預測 $\epsilon$，這在形式上等價。）
 
 **DSM 的意義：**
@@ -100,7 +102,7 @@ DSM 的思想是：**與其學習 $p(x)$（乾淨數據）的 Score，不如去�
 2.  生成一個隨機高斯噪聲 $\epsilon$。
 3.  製造一張加噪圖片 $\tilde{x} = x + \epsilon$。
 4.  將 $\tilde{x}$ 餵給神經網路 $s_\theta$。
-5.  要求神經網路的輸出 $s_\theta(\tilde{x})$ 盡可能等於 $- \epsilon / \sigma^2$（或者說，就是去預測 $\epsilon$）。
+5.  要求神經網路的輸出 $s_\theta(\tilde{x})$ 盡可能等於 $- \frac{\epsilon}{\sigma^2}$ （或者說，就是去預測 $\epsilon$）。
 
 這就是**降噪自動編碼器（Denoising Autoencoder）**！這就是為什麼 Score Matching 和 Denoising 是緊密相連的。
 
@@ -119,7 +121,7 @@ Score-Based (Diffusion) Generative Models 利用這個工具來「反轉」一�
 * 我們定義一個「時間表」，在 $T$ 個步驟中逐漸對 $x_0$ 添加高斯噪聲。
 * $x_0 \to x_1 \to x_2 \to \dots \to x_T$
 * 在每一步 $t$，我們都添加少量噪聲。
-* 直到最後，$x_T$ 變成了一張**純粹的高斯噪聲圖片**（服從 $\mathcal{N}(0, I)$）。
+* 直到最後， $x_T$ 變成了一張**純粹的高斯噪聲圖片**（服從 $\mathcal{N}(0, I)$）。
 
 ### 2. 訓練 (Training)
 
@@ -148,8 +150,11 @@ Score-Based (Diffusion) Generative Models 利用這個工具來「反轉」一�
     1.  **起始：** 從 $t=T$ 開始，生成一張純粹的高斯噪聲圖片 $x_T \sim \mathcal{N}(0, I)$。
     2.  **迭代：** 進行 $T$ 次迭代，從 $t=T$ 逐步遞減到 $t=1$。
     3.  在每一步 $t$：
-        a.  將當前的噪聲圖片 $x_t$ 和時間 $t$ 餵給我們訓練好的 Score 模型，得到**估計的 Score**： $\hat{s} = s_\theta(x_t, t)$。
+
+        a.  將當前的噪聲圖片 $x_t$ 和時間 $t$ 餵給訓練好的 Score 模型，得到**估計的 Score**： $\hat{s} = s_\theta(x_t, t)$。
+
         b.  使用這個估計的 Score $\hat{s}$，執行一步 Langevin Dynamics（或更先進的採樣器，如 DDPM/DDIM 更新規則）。這一步會計算出一個「稍微去噪」的 $x_{t-1}$。
+
         c.  這個更新步驟的直觀意義是：「**嘿，模型 $s_\theta$ 告訴我『上山』（去噪）的方向在這裡，我先往這個方向走一步，然後再隨機晃動一下。**」
     4.  **結束：** 當 $t=0$ 時，我們得到的 $x_0$ 就是一張全新的、由模型生成的高擬真度圖片。
 
@@ -157,7 +162,7 @@ Score-Based (Diffusion) Generative Models 利用這個工具來「反轉」一�
 
 ## 總結
 
-1.  **Score Matching** 是一種學習數據 Score Function ($\nabla_x \log p(x)$) 的方法。
+1.  **Score Matching** 是一種學習數據 Score Function ( $\nabla_x \log p(x)$ ) 的方法。
 2.  **Denoising Score Matching (DSM)** 是一種計算上可行的 Score Matching 變體，它透過將問題轉化為「**預測噪聲**」（即降噪）來規避了原版方法中棘手的數學計算。
 3.  在**擴散模型**中，DSM 被用來訓練一個神經網路 $s_\theta(x_t, t)$，使其能夠在**所有噪聲等級 $t$** 下估計 Score。
 4.  在**生成**新數據時，模型從純噪聲 $x_T$ 開始，利用 $s_\theta(x_t, t)$ 估計的 Score 作為「**指引**」，逐步反轉加噪過程，一步步「**去噪**」，最終得到一張清晰的樣本 $x_0$。
