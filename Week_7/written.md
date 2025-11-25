@@ -92,7 +92,7 @@ $$
 L_{DSM}(\theta) = \mathbb{E}_{p(x), \epsilon} \left[ \left\| s_\theta(x+\epsilon) - \left( - \frac{\epsilon}{\sigma^2} \right) \right\|^2 \right]
 $$
 
-    （註：實作中常會省略 $\sigma^2$ 或調整權重，訓練模型 $s_\theta(x+\epsilon)$ 直接去預測 $\epsilon$，這在形式上等價。）
+註：實作中常會省略 $\sigma^2$ 或調整權重，訓練模型 $s_\theta(x+\epsilon)$ 直接去預測 $\epsilon$，這在形式上等價。
 
 **DSM 的意義：**
 我們把一個「計算 $\nabla_x \log p(x)$」的**不可解問題**，轉變成了一個「計算雅可比矩陣跡數」的**昂貴問題**，最後又轉變成了一個「**預測噪聲**」的**簡單迴歸問題**。
