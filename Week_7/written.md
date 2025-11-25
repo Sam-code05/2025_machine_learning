@@ -80,7 +80,7 @@ L_{DSM}(\theta) = \mathbb{E}_{p(x), \mathcal{N}(\tilde{x}|x, \sigma^2 I)} \left[
 $$
 
 
-    這個 $\nabla_{\tilde{x}} \log p(\tilde{x}|x)$ 是什麼？它只是「給定 $x$，得到 $\tilde{x}$」的機率的梯度。
+這個 $\nabla_{\tilde{x}} \log p(\tilde{x}|x)$ 是什麼？它只是「給定 $x$ ，得到 $\tilde{x}$」的機率的梯度。
     * $p(\tilde{x}|x) = \mathcal{N}(\tilde{x}|x, \sigma^2 I) \propto \exp\left(-\frac{\|\tilde{x}-x\|^2}{2\sigma^2}\right)$
     * $\log p(\tilde{x}|x) = C - \frac{\|\tilde{x}-x\|^2}{2\sigma^2}$
     * $\nabla_{\tilde{x}} \log p(\tilde{x}|x) = \nabla_{\tilde{x}} \left( C - \frac{\|\tilde{x}-x\|^2}{2\sigma^2} \right) = - \frac{\tilde{x}-x}{\sigma^2}$
